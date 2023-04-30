@@ -10,3 +10,11 @@ Consome dados de uma API rest do Google Firebase, disponibilizado pelo ministéi
 ## Desenvolvimento
 - Java
 
+### Colaboração e sugestões de melhorias
+O código está aberto e disponível para colaboração e sugestões de melhorias. Sinta-se livre para enviar pull requests com modificações e correções.
+
+Qualquer dúvida ou sugestão, não hesite em entrar em contato!
+
+## Desenvolvimento
+* [Leo Espindola](https://github.com/oleoespindola)
+* [Luis](https://github.com/luis1408)
