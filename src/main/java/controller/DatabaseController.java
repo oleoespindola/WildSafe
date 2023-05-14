@@ -1,17 +1,15 @@
-package controllers;
+package controller;
 
 import java.io.IOException;
 
-import java.net.URISyntaxException;
-import java.net.URI;
-import java.net.URL;
+import java.net.*;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import models.EspecieModel;
+import model.EspecieModel;  
 
-public class EspeciesControllers {
+public class DatabaseController {
     
     private URL url;
 
@@ -25,7 +23,7 @@ public class EspeciesControllers {
         return especie;
     }
 
-    public EspeciesControllers(String dblink) throws URISyntaxException, IOException {
+    public DatabaseController(String dblink) throws URISyntaxException, IOException {
         URI uri = new URI(dblink);
         url = uri.toURL();
         evocarDB();
@@ -35,8 +33,7 @@ public class EspeciesControllers {
     public void evocarDB() throws IOException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            setEspecie(objectMapper.readValue(url, EspecieModel.class));;
-            System.out.print(especie);
+            setEspecie(objectMapper.readValue(url, EspecieModel.class));
         } catch (JacksonException e) {
             System.out.println("Erro");
         }

@@ -1,17 +1,17 @@
-package views;
+package view;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import controllers.EspeciesControllers;
+import controller.DatabaseController;
 
 public class FormView extends javax.swing.JFrame {
 
-    EspeciesControllers especiesControllers;
+    DatabaseController especiesControllers;
 
     public void setEspeciesControllers() throws URISyntaxException, IOException {
-        String urlDB = "https://wildsafeapp-default-rtdb.firebaseio.com/db/-NVMowmdKX0gY2R6Hr_Y.json";
-        this.especiesControllers = new EspeciesControllers(urlDB);
+        String urlDB = "https://wildsafeapp-default-rtdb.firebaseio.com/db/1.json";
+        this.especiesControllers = new DatabaseController(urlDB);
     }
 
     public FormView() throws URISyntaxException, IOException {
@@ -99,7 +99,7 @@ public class FormView extends javax.swing.JFrame {
 
         tableResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {especiesControllers.getEspecie().getBioma(), especiesControllers.getEspecie().getCategoriadeAmeaca(), especiesControllers.getEspecie().getEspecieSimplificado()},
+                {especiesControllers.getEspecie().getBioma(), especiesControllers.getEspecie().getCategoriadeAmeaca(), especiesControllers.getEspecie().getFamilia()},
             },
             new String [] {
                 "Bioma", "Categoria De Ameaça", "Especie Exclusiva do Brasil", "Especie Simplificado"
