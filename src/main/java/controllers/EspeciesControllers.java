@@ -1,25 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.MalformedURLException;
+import java.io.IOException;
+
+import java.net.URISyntaxException;
+import java.net.URI;
 import java.net.URL;
 
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- *
- * @author leo0m
- */
+import models.EspecieModel;
+
 public class EspeciesControllers {
     
-    private String dblink = "https://wildsafeapp-default-rtdb.firebaseio.com/.json";
+    private URL url;
+
+    private EspecieModel especie;
+
+    public void setEspecie(EspecieModel especie) {
+        this.especie = especie;
+    }
+
+    public EspecieModel getEspecie() {
+        return especie;
+    }
+
+    public EspeciesControllers(String dblink) throws URISyntaxException, IOException {
+        URI uri = new URI(dblink);
+        url = uri.toURL();
+        evocarDB();
+    }
+
     
-    public void db() throws MalformedURLException {
-        URL url = new URL(dblink);
-        ObjectMapper objectMapper = new ObjectMapper();
+    public void evocarDB() throws IOException {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            setEspecie(objectMapper.readValue(url, EspecieModel.class));;
+            System.out.print(especie);
+        } catch (JacksonException e) {
+            System.out.println("Erro");
+        }
+
     }
     
 }

@@ -1,14 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+package views;
 
-/**
- *
- * @author leo0m
- */
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+
 public class WildSafe {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws URISyntaxException, IOException {
+        FormView formView = new FormView();
+        formView.inicialize();
     }
 }
