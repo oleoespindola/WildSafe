@@ -7,51 +7,49 @@ import model.EspecieModel;
 
 public class ReadCsvController {
     /*
-     * Transforma a lista de espécies em estinção (arquivo csv) em uma lista de objetos java
+     * Transforma a lista de espécies em estinção (arquivo csv) em uma lista de
+     * objetos java
      */
 
-    public ReadCsvController(String csvFile) {
-        readCSV(csvFile);
-    }
+    public Map<Integer, EspecieModel> readCSV(String csvFile) {
 
-    public ArrayList<EspecieModel> readCSV(String csvFile) {
+        Map<Integer, EspecieModel> especies = new HashMap<>();
+        
+        int id = 0;
+        String line;
 
-        ArrayList<EspecieModel> especies = new ArrayList<>();
+            try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-
-            String  line;
-            
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
-
-                 EspecieModel especieModel = new EspecieModel();
-
-                 especieModel.setFaunaFlora(data[0]);
-                 especieModel.setGrupo(data[1]);
-                 especieModel.setFamilia(data[2]);
-                 especieModel.setEspecieSimplificado(data[3]);
-                 especieModel.setNomeComum(data[4]);
-                 especieModel.setCategoriadeAmeaca(data[5]);
-                 especieModel.setSiglaCategoriadeAmeaca(data[6]);
-                 especieModel.setBioma(data[7]);
-                 especieModel.setPrincipaisAmeacas(data[8]);
-                 especieModel.setPresencaEmAreasProtegidas(data[9]);
-                 especieModel.setPlanodeAcaoNacionalparaConservacaoPAN(data[10]);
-                 especieModel.setOrdenamentoPesqueiro(data[11]);
-                 especieModel.setNiveldeProtecaoNaEstrategiaNacional(data[12]);
-                 especieModel.setEspecieExclusivaDoBrasil(data[13]);
-                 especieModel.setEstadosDeOcorrencia(data[15]);
-
-                 especies.add(especieModel);
-
-                 return especies;
-            }   
-            
-        } catch (Exception e) {
-            return null;
-        }
-        return null;
-    }
+                while ((line = br.readLine()) != null) {
+                    
+                    String[] data = line.split(";");
     
+                    EspecieModel especie = new EspecieModel();
+    
+                    especie.setFaunaFlora(data[0]);
+                    especie.setGrupo(data[1]);
+                    especie.setFamilia(data[2]);
+                    especie.setEspecieSimplificado(data[3]);
+                    especie.setNomeComum(data[4]);
+                    especie.setCategoriadeAmeaca(data[5]);
+                    especie.setSiglaCategoriadeAmeaca(data[6]);
+                    especie.setBioma(data[7]);
+                    especie.setPrincipaisAmeacas(data[8]);
+                    especie.setPresencaEmAreasProtegidas(data[9]);
+                    especie.setPlanodeAcaoNacionalparaConservacaoPAN(data[10]);
+                    especie.setOrdenamentoPesqueiro(data[11]);
+                    especie.setNiveldeProtecaoNaEstrategiaNacional(data[12]);
+                    especie.setEspecieExclusivaDoBrasil(data[13]);
+                    especie.setEstadosDeOcorrencia(data[14]);
+    
+                    especies.put(id, especie);
+                    id++;
+    
+                }
+            } catch (Exception e) {
+                System.out.printf("ReadCsvController: Erro ao transformar o CSV em objeto java");
+            }
+            return especies;
+    }
+
 }

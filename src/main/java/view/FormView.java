@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import controller.DatabaseController;
 
@@ -9,19 +11,22 @@ public class FormView extends javax.swing.JFrame {
 
     DatabaseController especiesControllers;
 
-    public void setEspeciesControllers() throws URISyntaxException, IOException {
-        String urlDB = "https://wildsafeapp-default-rtdb.firebaseio.com/db/1.json";
-        this.especiesControllers = new DatabaseController(urlDB);
-    }
-
     public FormView() throws URISyntaxException, IOException {
-        setEspeciesControllers();
         initComponents();
     }
 
     private void initComponents() {
 
         btnSincronizar = new javax.swing.JButton();
+
+        btnSincronizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DatabaseController database = new DatabaseController();
+                database.sincronizar();
+            }
+        });
+
         btnConectar = new javax.swing.JButton();
         lblFaunaFlora = new javax.swing.JLabel();
         cbxFaunaFlora = new javax.swing.JComboBox<>();
@@ -99,7 +104,7 @@ public class FormView extends javax.swing.JFrame {
 
         tableResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {especiesControllers.getEspecie().getBioma(), especiesControllers.getEspecie().getCategoriadeAmeaca(), especiesControllers.getEspecie().getFamilia()},
+                {null, null, null, }
             },
             new String [] {
                 "Bioma", "Categoria De Ameaça", "Especie Exclusiva do Brasil", "Especie Simplificado"
@@ -225,17 +230,11 @@ public class FormView extends javax.swing.JFrame {
         pack();
     }
 
-    private void cbxFaunaFloraActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+    private void cbxFaunaFloraActionPerformed(java.awt.event.ActionEvent evt) {}
 
-    private void cbxGrupoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+    private void cbxGrupoActionPerformed(java.awt.event.ActionEvent evt) {}
 
-    private void cbxFamiliaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+    private void cbxFamiliaActionPerformed(java.awt.event.ActionEvent evt) {}
 
     public void inicialize() {
         try {
