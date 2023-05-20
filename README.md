@@ -7,9 +7,6 @@ Consome dados de uma API rest do Google Firebase, disponibilizado pelo ministéi
 - **Pesquisar:** Efetuar pesquisa no banco de dados, aplicando filtros de acordo com as opções de pesquisa.
 - **Limpar:** Limpar os dados das opções de pesquisa, retornando aos valores padrões.
 
-## Desenvolvimento
-- Java
-
 ### Colaboração e sugestões de melhorias
 O código está aberto e disponível para colaboração e sugestões de melhorias. Sinta-se livre para enviar pull requests com modificações e correções.
 
