@@ -137,4 +137,24 @@ public class EspecieModel {
         return estadosDeOcorrencia;
     }
 
+    public String toString() {
+        return 
+        "\n" + getBioma() +
+        "\n" + getCategoriadeAmeaca() + 
+        "\n" + getEspecieExclusivaDoBrasil() + 
+        "\n" + getEspecieSimplificado() + 
+        "\n" + getEstadosDeOcorrencia() + 
+        "\n" + getFamilia() + 
+        "\n" + getFaunaFlora() + 
+        "\n" + getGrupo() + 
+        "\n" + getNiveldeProtecaoNaEstrategiaNacional() + 
+        "\n" + getNomeComum() + 
+        "\n" + getOrdenamentoPesqueiro() + 
+        "\n" + getPlanodeAcaoNacionalparaConservacaoPAN() +
+        "\n" + getPresencaEmAreasProtegidas() + 
+        "\n" + getPrincipaisAmeacas() + 
+        "\n" + getSiglaCategoriadeAmeaca() + 
+        "\n";
+    }
+
 }

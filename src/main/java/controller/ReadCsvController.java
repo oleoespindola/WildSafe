@@ -44,6 +44,8 @@ public class ReadCsvController {
                 especies.put(data[4], especie);
             }
 
+            System.out.println(especies.toString());
+
         } catch (Exception e) {
             System.out.printf("\n\nReadCsvController: Erro ao transformar o CSV em objeto java: %s", e);
         }
