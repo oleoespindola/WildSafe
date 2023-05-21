@@ -2,14 +2,16 @@ package view;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controller.DatabaseController;
+import model.MapToJtableModel;
 
 public class FormView extends javax.swing.JFrame {
 
-    DatabaseController especiesControllers;
+    private DatabaseController database = new DatabaseController();
 
     public FormView() throws URISyntaxException, IOException {
         initComponents();
@@ -18,16 +20,22 @@ public class FormView extends javax.swing.JFrame {
     private void initComponents() {
 
         btnSincronizar = new javax.swing.JButton();
-
         btnSincronizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DatabaseController database = new DatabaseController();
-                database.sincronizar();
+                database.setDatabase();
             }
         });
 
         btnConectar = new javax.swing.JButton();
+        btnConectar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MapToJtableModel mapToJtable = new MapToJtableModel(database.getDatabase());
+                tableResultados.setModel(mapToJtable.mapToTable());
+            }
+        });
+
         lblFaunaFlora = new javax.swing.JLabel();
         cbxFaunaFlora = new javax.swing.JComboBox<>();
         cbxGrupo = new javax.swing.JComboBox<>();
@@ -100,16 +108,8 @@ public class FormView extends javax.swing.JFrame {
 
         lblNomeComum.setText("Nome Comum");
 
-        lblEstadosOcorrencia.setText("Estados de Ocorrência");
-
-        tableResultados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, }
-            },
-            new String [] {
-                "Bioma", "Categoria De Ameaça", "Especie Exclusiva do Brasil", "Especie Simplificado"
-            }
-        ));
+        lblEstadosOcorrencia.setText("Estados de Ocorrência"); 
+        
         jScrollPane1.setViewportView(tableResultados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

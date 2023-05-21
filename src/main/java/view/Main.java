@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-public class WildSafe {
+public class Main {
     /*
      * Apenas instacia um objeto formulário e inicializa
      */
