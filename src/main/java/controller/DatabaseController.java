@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,6 +16,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.EspecieModel;
@@ -24,61 +26,65 @@ public class DatabaseController {
      * Lê, grava, altera e deleta os registros no banco de dados do projeto
      */
 
-    String url = "https://wildsafeapp-default-rtdb.firebaseio.com/"; // URL do banco
+    private String url = "https://wildsafeapp-default-rtdb.firebaseio.com/"; // URL do banco
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    CloseableHttpClient httpClient = HttpClients.createDefault();
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private CloseableHttpClient httpClient = HttpClients.createDefault();
+    private Map<Integer, EspecieModel> especies = new HashMap<>();
+    HttpResponse response;
+
+    public DatabaseController() {
+        
+    }
 
     public void setDatabase() {
         String csv = "csv/lista-de-especies-ameacas-2020.csv";
 
-        Map<String, EspecieModel> especies = new HashMap<>(); // Instancia o molde dos dados
         ReadCsvController readCSV = new ReadCsvController(); // Instacia classe de leitura de csv
 
         // Transforma o arquivo csv em objeto
-        especies.putAll(readCSV.readCSV(csv));
+        this.especies.putAll(readCSV.readCSV(csv));
         /*
          * Grava o arquivo csv no banco de dados
          */
 
         try {
 
-            String value = objectMapper.writeValueAsString(especies);
+            String applicationJson = this.objectMapper.writeValueAsString(this.especies);
 
             HttpPut request = new HttpPut(url + "/.json"); // Instancia a rquisição
             request.setHeader("Content-Type", "application/json");
 
             // Declara a entidade HTTP
-            HttpEntity entity = new StringEntity(value, ContentType.APPLICATION_JSON);
+            HttpEntity entity = new StringEntity(applicationJson, ContentType.APPLICATION_JSON);
             request.setEntity(entity);
 
             // Executar a requisição
-            HttpResponse response = httpClient.execute(request);
+            this.response = httpClient.execute(request);
 
             // verificar o status da rquisição
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == 200) {
-                System.out.printf("\n\nRecurso atualizado com sucesso!\nRegistro: %s",
-                        EntityUtils.toString(response.getEntity()));
+                System.out.printf("\n\nDatabaseController | Requisição executada com suscesso: %s", statusCode);
             } else {
-                System.out.println("\n\nFalha ao atualizar o recurso. Código de resposta: " + statusCode);
+                System.out.printf("\n\nDatabaseController | Falha ao atualizar o recurso. Código de resposta: %s",
+                        statusCode);
             }
 
         } catch (JsonProcessingException e) {
-            System.out.println("\n\nErro ao criar o cliente HTTP: " + e.getMessage());
+            System.out.printf("\n\nDatabaseController | Erro no processo Json: %s", e.getMessage());
         } catch (IOException e) {
-            System.out.println("\n\nErro ao criar o cliente HTTP: " + e.getMessage());
+            System.out.printf("\n\nDatabaseController | IOException: %s", e.getMessage());
         } finally {
             try {
                 httpClient.close();
             } catch (IOException e) {
-                System.out.println("\n\nErro ao fechar o cliente HTTP: " + e.getMessage());
+                System.out.printf("\n\nDatabaseController | IOException -> httpClient.close: %s", e.getMessage());
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public Map<String, EspecieModel> getDatabase() {
+    public Map<Integer, EspecieModel> getDatabase() {
         /*
          * Lê todos os registros do arquivo csv
          */
@@ -87,27 +93,34 @@ public class DatabaseController {
             request.getAllHeaders();
 
             // Excuta a rquisição
-            HttpResponse response = httpClient.execute(request);
+            this.response = httpClient.execute(request);
 
-            int statusCode = response.getStatusLine().getStatusCode();
+            int statusCode = this.response.getStatusLine().getStatusCode();
             if (statusCode == 200) {
-                System.out.printf("\n\nRequisição executada com suscesso! %s", statusCode);
+                System.out.printf("\n\nDatabaseController | Requisição executada com suscesso: %s", statusCode);
             } else {
-                System.out.println("\n\nFalha ao atualizar o recurso. Código de resposta: " + statusCode);
+                System.out.printf("\n\nDatabaseController | Falha ao atualizar o recurso. Código de resposta: %s",
+                        statusCode);
             }
 
-            Map<String, EspecieModel> especies = objectMapper.readValue(response.toString(), HashMap.class);
-            return especies;
+            String responseBody = EntityUtils.toString(response.getEntity());
+            ArrayList<EspecieModel> especiesList = objectMapper.readValue(responseBody, new TypeReference<ArrayList<EspecieModel>>() {});
+            int key = 0;
+            for (EspecieModel especie : especiesList) {
+                this.especies.put(key, especie);
+                key++;
+            }
+            return this.especies;
 
         } catch (JsonProcessingException e) {
-            System.out.println("\n\nErro ao criar o cliente HTTP: " + e.getMessage());
+            System.out.printf("\n\nDatabaseController | Erro no processo Json: %s", e.getMessage());
         } catch (IOException e) {
-            System.out.println("\n\nErro ao criar o cliente HTTP: " + e.getMessage());
+            System.out.printf("\n\nDatabaseController | IOException: %s", e.getMessage());
         } finally {
             try {
                 httpClient.close();
             } catch (IOException e) {
-                System.out.println("\n\nErro ao fechar o cliente HTTP: " + e.getMessage());
+                System.out.printf("\n\nDatabaseController | IOException -> httpClient.close: %s", e.getMessage());
             }
         }
         return null;

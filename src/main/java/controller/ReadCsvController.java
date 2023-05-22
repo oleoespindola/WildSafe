@@ -11,40 +11,38 @@ public class ReadCsvController {
      * objetos EspecieModel
      */
 
-    public Map<String, EspecieModel> readCSV(String csvFile) {
+    public Map<Integer, EspecieModel> readCSV(String csvFile) {
 
-        Map<String, EspecieModel> especies = new HashMap<>();
-
+        Map<Integer, EspecieModel> especies = new HashMap<>();
         String line;
+        int key = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-
             while ((line = br.readLine()) != null) {
 
-                String[] data = line.split(";");
+                String[] column = line.split(";");
 
                 EspecieModel especie = new EspecieModel();
 
-                especie.setFaunaFlora(data[0]);
-                especie.setGrupo(data[1]);
-                especie.setFamilia(data[2]);
-                especie.setEspecieSimplificado(data[3]);
-                especie.setNomeComum(data[4]);
-                especie.setCategoriadeAmeaca(data[5]);
-                especie.setSiglaCategoriadeAmeaca(data[6]);
-                especie.setBioma(data[7]);
-                especie.setPrincipaisAmeacas(data[8]);
-                especie.setPresencaEmAreasProtegidas(data[9]);
-                especie.setPlanodeAcaoNacionalparaConservacaoPAN(data[10]);
-                especie.setOrdenamentoPesqueiro(data[11]);
-                especie.setNiveldeProtecaoNaEstrategiaNacional(data[12]);
-                especie.setEspecieExclusivaDoBrasil(data[13]);
-                especie.setEstadosDeOcorrencia(data[14]);
+                especie.setFaunaFlora(column[0]);
+                especie.setGrupo(column[1]);
+                especie.setFamilia(column[2]);
+                especie.setEspecieSimplificado(column[3]);
+                especie.setNomeComum(column[4]);
+                especie.setCategoriadeAmeaca(column[5]);
+                especie.setSiglaCategoriadeAmeaca(column[6]);
+                especie.setBioma(column[7]);
+                especie.setPrincipaisAmeacas(column[8]);
+                especie.setPresencaEmAreasProtegidas(column[9]);
+                especie.setPlanodeAcaoNacionalparaConservacaoPAN(column[10]);
+                especie.setOrdenamentoPesqueiro(column[11]);
+                especie.setNiveldeProtecaoNaEstrategiaNacional(column[12]);
+                especie.setEspecieExclusivaDoBrasil(column[13]);
+                especie.setEstadosDeOcorrencia(column[14]);
 
-                especies.put(data[4], especie);
+                especies.put(key, especie);
+                key++;
             }
-
-            System.out.println(especies.toString());
 
         } catch (Exception e) {
             System.out.printf("\n\nReadCsvController: Erro ao transformar o CSV em objeto java: %s", e);

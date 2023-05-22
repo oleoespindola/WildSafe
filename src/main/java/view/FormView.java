@@ -11,8 +11,6 @@ import model.MapToJtableModel;
 
 public class FormView extends javax.swing.JFrame {
 
-    private DatabaseController database = new DatabaseController();
-
     public FormView() throws URISyntaxException, IOException {
         initComponents();
     }
@@ -23,7 +21,9 @@ public class FormView extends javax.swing.JFrame {
         btnSincronizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DatabaseController database = new DatabaseController();
                 database.setDatabase();
+                database = null;
             }
         });
 
@@ -31,8 +31,10 @@ public class FormView extends javax.swing.JFrame {
         btnConectar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DatabaseController database = new DatabaseController();
                 MapToJtableModel mapToJtable = new MapToJtableModel(database.getDatabase());
                 tableResultados.setModel(mapToJtable.mapToTable());
+                database = null;
             }
         });
 

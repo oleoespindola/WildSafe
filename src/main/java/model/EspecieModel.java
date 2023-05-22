@@ -1,21 +1,54 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EspecieModel {
     
+    @JsonProperty("faunaFlora")
     private String faunaFlora;
+    
+    @JsonProperty("grupo")
     private String grupo;
+
+    @JsonProperty("familia")
     private String familia;
+
+    @JsonProperty("especieSimplificado")
     private String especieSimplificado;
+
+    @JsonProperty("nomeComum")
     private String nomeComum;
+
+    @JsonProperty("categoriadeAmeaca")
     private String categoriadeAmeaca;
+
+    @JsonProperty("siglaCategoriadeAmeaca")
     private String siglaCategoriadeAmeaca;
+
+    @JsonProperty("bioma")
     private String bioma;
+    
+    @JsonProperty("principaisAmeacas")
     private String principaisAmeacas;
+
+    @JsonProperty("presencaEmAreasProtegidas")
     private String presencaEmAreasProtegidas;
+    
+    @JsonProperty("planodeAcaoNacionalparaConservacaoPAN")
     private String planodeAcaoNacionalparaConservacaoPAN;
+    
+    @JsonProperty("ordenamentoPesqueiro")
     private String ordenamentoPesqueiro;
+    
+    @JsonProperty("niveldeProtecaoNaEstrategiaNacional")
     private String niveldeProtecaoNaEstrategiaNacional;
+    
+    @JsonProperty("especieExclusivaDoBrasil")
     private String especieExclusivaDoBrasil;
+    
+    @JsonProperty("estadosDeOcorrencia")
     private String estadosDeOcorrencia;
 
     public void setFaunaFlora(String faunaFlora) {
@@ -139,22 +172,43 @@ public class EspecieModel {
 
     public String toString() {
         return 
-        "\n" + getBioma() +
-        "\n" + getCategoriadeAmeaca() + 
-        "\n" + getEspecieExclusivaDoBrasil() + 
-        "\n" + getEspecieSimplificado() + 
-        "\n" + getEstadosDeOcorrencia() + 
-        "\n" + getFamilia() + 
-        "\n" + getFaunaFlora() + 
-        "\n" + getGrupo() + 
-        "\n" + getNiveldeProtecaoNaEstrategiaNacional() + 
-        "\n" + getNomeComum() + 
-        "\n" + getOrdenamentoPesqueiro() + 
-        "\n" + getPlanodeAcaoNacionalparaConservacaoPAN() +
-        "\n" + getPresencaEmAreasProtegidas() + 
-        "\n" + getPrincipaisAmeacas() + 
-        "\n" + getSiglaCategoriadeAmeaca() + 
-        "\n";
+        "," + getBioma() +
+        "," + getCategoriadeAmeaca() + 
+        "," + getEspecieExclusivaDoBrasil() + 
+        "," + getEspecieSimplificado() + 
+        "," + getEstadosDeOcorrencia() + 
+        "," + getFamilia() + 
+        "," + getFaunaFlora() + 
+        "," + getGrupo() + 
+        "," + getNiveldeProtecaoNaEstrategiaNacional() + 
+        "," + getNomeComum() + 
+        "," + getOrdenamentoPesqueiro() + 
+        "," + getPlanodeAcaoNacionalparaConservacaoPAN() +
+        "," + getPresencaEmAreasProtegidas() + 
+        "," + getPrincipaisAmeacas() + 
+        "," + getSiglaCategoriadeAmeaca() + 
+        ",";
+    }
+
+    public String[] getValuesAsArray() {
+        return new String[] {
+            bioma,
+            categoriadeAmeaca,
+            especieExclusivaDoBrasil,
+            especieSimplificado,
+            estadosDeOcorrencia,
+            familia,
+            faunaFlora,
+            grupo,
+            niveldeProtecaoNaEstrategiaNacional,
+            nomeComum,
+            ordenamentoPesqueiro,
+            planodeAcaoNacionalparaConservacaoPAN,
+            presencaEmAreasProtegidas,
+            principaisAmeacas,
+            siglaCategoriadeAmeaca
+        };
+
     }
 
 }
